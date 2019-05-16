@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+        xmlns:core="sap.ui.core"
+        xmlns:f="sap.ui.layout.form"
+        xmlns="sap.m"
+        displayBlock="true">
+    <Dialog contentWidth="50rem" title="{i18n>tt_reportStatistics}">
+        <beginButton>
+            <Button type="Accept" icon="sap-icon://save" press="onSavePressed"/>
+        </beginButton>
+        <endButton>
+            <Button class="closebtn"
+                    type="Transparent"
+                    icon="sap-icon://undo"
+                    press="onDialogClose"/>
+        </endButton>
+        <content>
+            <f:SimpleForm editable="true"
+                          layout="ResponsiveGridLayout"
+                          labelSpanXL="4"
+                          labelSpanL="3"
+                          labelSpanM="4"
+                          labelSpanS="12"
+                          adjustLabelSpan="false"
+                          emptySpanXL="0"
+                          emptySpanL="4"
+                          emptySpanM="0"
+                          emptySpanS="0"
+                          columnsXL="2"
+                          columnsL="1"
+                          columnsM="1"
+                          singleContainerFullSize="false">
+                <Label text="{i18n>col_From}"/>
+                <DateTimePicker displayFormat="dd/MM/yyyy HH:mm"
+                                valueFormat="dd/MM/yyyy HH:mm"
+                                placeholder="{i18n>col_From}"
+                                required="true"
+                                change="onChangeToDate"
+                                dateValue="{currentBCTKOEE>/Frdat}"/>
+                <Label text="{i18n>col_To}"/>
+                <DateTimePicker displayFormat="dd/MM/yyyy HH:mm"
+                                valueFormat="dd/MM/yyyy HH:mm"
+                                placeholder="{i18n>col_To}"
+                                required="true"
+                                change="onChangeToDate"
+                                dateValue="{currentBCTKOEE>/Todat}"/>
+                <Label text="{i18n>col_Total}"/>
+                <Input editable="false" type="Number" visible="{currentBCTKOEE>isEditing}"
+                       value="{currentBCTKOEE>/Total}"/>
+                <Label text="{i18n>col_Ca}"/>
+                <Input
+                        value="{currentBCTKOEE>/Shift}"/>
+
+                <Label text="{i18n>col_Sukien}"/>
+                <Select
+                        forceSelection="false"
+                        selectedItem="{Atzhl}"
+                        selectedKey="{currentBCTKOEE>/Atwtb}"
+                        items="{ path: '/SUKIENOEESet'}">
+                    <items>
+                        <core:Item key="{Atnam}{Atzhl}" text="{Atwtb}"/>
+                    </items>
+                </Select>
+                <Label text="{i18n>col_Notes}"/>
+                <TextArea value="{currentBCTKOEE>/Notes}"/>
+
+                <Label text="{i18n>col_Material}"/>
+                <Input
+                        showValueHelp="true"
+                        value="{currentBCTKOEE>/Material}"
+                        valueHelpRequest="oninpMatVHRequest"
+                        placeholder="{i18n>col_Material}"/>
+            </f:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

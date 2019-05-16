@@ -1,0 +1,82 @@
+<core:FragmentDefinition
+        xmlns:core="sap.ui.core"
+        xmlns="sap.m"
+        displayBlock="true">
+    <Dialog id="ChangePassDialog" title="{i18n>__dialogFilterTitle}">
+        <buttons>
+            <Button class="closebtn"
+                    text="{i18n>__btn_Cancel}"
+                    press="__btn_Cancel"/>
+            <Button id="btnOk"
+                    text="{i18n>__btn_Ok}"
+                    press="__btn_Accept"
+                    type="Accept"/>
+        </buttons>
+        <content>
+            <sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="__form0">
+                <sap.ui.layout.form:formContainers>
+                    <sap.ui.layout.form:FormContainer>
+                        <sap.ui.layout.form:formElements>
+                            <sap.ui.layout.form:FormElement label="{i18n>lbl_Plan}">
+                                <sap.ui.layout.form:fields>
+                                    <Select width="100%"
+                                            id="inp_Plant"
+                                            enabled="true"
+                                            selectedKey=""
+                                            items="{/PlantSet}"
+                                            forceSelection="true">
+                                        <core:Item key="{Bukrs}" text="{Bukrs} - {Butxt}"/>
+                                    </Select>
+                                </sap.ui.layout.form:fields>
+                            </sap.ui.layout.form:FormElement>
+                            <sap.ui.layout.form:FormElement label="{i18n>lbl_Nhomnv}">
+                                <sap.ui.layout.form:fields>
+                                    <Select width="100%"
+                                            id="inp_Nhomnv"
+                                            enabled="true"
+                                            selectedKey=""
+                                            items="{/EmpgroupSet}"
+                                            forceSelection="true">
+                                        <core:Item key="{Id}" text="{Grnam}"/>
+                                    </Select>
+                                </sap.ui.layout.form:fields>
+                            </sap.ui.layout.form:FormElement>
+                            <sap.ui.layout.form:FormElement label="{i18n>lbl_Malosanxuat}">
+                                <sap.ui.layout.form:fields>
+                                    <SearchField showRefreshButton="false"
+                                                 width="{= ${device>/system/phone} ? '100%' : '100%' }"
+                                                 enableSuggestions="true"
+                                                 id="inp_Malosx"
+                                                 search="onSuggestSlocProd"
+                                    />
+                                </sap.ui.layout.form:fields>
+                            </sap.ui.layout.form:FormElement>
+                            <sap.ui.layout.form:FormElement>
+                                <sap.ui.layout.form:fields>
+                                    <List growingThreshold="8"
+                                          growing="true"
+                                          showNoData="false"
+                                          mode="SingleSelectMaster"
+                                          growingScrollToLoad="true"
+                                          items="{slocProdModel>/results}"
+                                          itemPress="selSlocProd"
+                                          id="liItems"
+                                          noDataText="{i18n>noResource}">
+                                        <StandardListItem type="Navigation"
+                                                          counter="0"
+                                                          title="{slocProdModel>Wempf}"
+                                                          info="{slocProdModel>Ferth}"
+                                        />
+                                    </List>
+                                </sap.ui.layout.form:fields>
+                            </sap.ui.layout.form:FormElement>
+                        </sap.ui.layout.form:formElements>
+                    </sap.ui.layout.form:FormContainer>
+                </sap.ui.layout.form:formContainers>
+                <sap.ui.layout.form:layout>
+                    <sap.ui.layout.form:ResponsiveGridLayout id="__layout0"/>
+                </sap.ui.layout.form:layout>
+            </sap.ui.layout.form:Form>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

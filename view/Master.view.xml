@@ -1,0 +1,42 @@
+<mvc:View xmlns:core="sap.ui.core"
+          xmlns:sem="sap.m.semantic"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns:html="http://www.w3.org/1999/xhtml"
+          xmlns="sap.m" controllerName="ZAC_APP.controller.Master">
+    <sem:MasterPage
+            title="{i18n>tt_resourceSet}"
+            showHeader="false"
+            showFooter="true">
+        <sem:content>
+            <PullToRefresh id="_refresh"
+                           refresh="onRefresh">
+            </PullToRefresh>
+
+            <List   growingThreshold="8"
+                    growing="true"
+                    mode="SingleSelectMaster"
+                    growingScrollToLoad="true"
+                    items="{ path: 'resourceMaster>/results', length: '20' }"
+                    itemPress="navToDetail"
+                    noDataText="{i18n>noResource}">
+                <StandardListItem type="Navigation"
+                                  counter="0"
+                                  title="{resourceMaster>Ktext}"
+                                  description="{resourceMaster>Arbpl}"
+                                  info="{resourceMaster>Werks}"
+                                  id="__item1"/>
+            </List>
+        </sem:content>
+        <sem:customFooterContent>
+            <HBox width="100%" justifyContent="Center">
+                <ToolbarSpacer/>
+            <Button enabled="true"
+                    press="navToFilterDialog"
+                    type="Transparent"
+                    icon="sap-icon://filter">
+            </Button>
+            </HBox>
+
+        </sem:customFooterContent>
+    </sem:MasterPage>
+</mvc:View>

@@ -1,0 +1,6 @@
+<mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        controler="ZAC_APP.controller.InitView"
+        xmlns="sap.m">
+    <SplitApp id="rootApp"/>
+</mvc:View>

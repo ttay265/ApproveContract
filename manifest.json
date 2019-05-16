@@ -1,0 +1,126 @@
+{
+  "_version": "1.1.0",
+  "sap.app": {
+    "_version": "1.1.0",
+    "id": "ZAC_APP",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "sourceTemplate": {
+      "id": "ui5template.basicSAPUI5ApplicationProject",
+      "version": "1.32.0"
+    }
+  },
+  "sap.ui": {
+    "_version": "1.1.0",
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "supportedThemes": [
+      "sap_hcb",
+      "sap_bluecrystal"
+    ]
+  },
+  "sap.ui5": {
+    "_version": "1.1.0",
+    "rootView": {
+      "viewName": "ZAC_APP.view.InitView",
+      "type": "XML"
+    },
+    "dependencies": {
+      "minUI5Version": "1.30.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ZAC_APP.i18n.i18n"
+        }
+      },
+      "": {
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "useBatch": false,
+          "user": "TRUSTUSER",
+          "password": "S@pAC2017",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "None",
+          "setRefreshAfterChange": true
+        },
+        "uri": "/sap/opu/odata/sap/zAC_srv/"
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "ZAC_APP.view",
+        "controlId": "rootApp",
+        "controlAggregation": "masterPages"
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "master",
+          "target": [
+            "DetailPage",
+            "MasterPage"
+          ]
+        },
+        {
+          "pattern": "resourceDetail/{ContractId}",
+          "name": "detail",
+          "target": [
+            "MasterPage",
+            "DetailPage"
+          ]
+        }
+      ],
+      "targets": {
+        "MasterPage": {
+          "viewName": "Master",
+          "viewLevel": 1,
+          "controlId": "rootApp",
+          "controlAggregation": "masterPages"
+        },
+        "DetailPage": {
+          "viewName": "Detail",
+          "viewLevel": 2,
+          "controlId": "rootApp",
+          "controlAggregation": "detailPages"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+/* Enter your custom styles here */
+.cell .sapMListTblCell:not(:first-child) {
+    border: 1px solid #ccc;
+}
+.sap-desktop .sapTntToolPageMain, .sap-tablet .sapTntToolPageMain {
+    padding-left: 0rem !important;
+}
+.sapMCLI .sapMLIB .sapMLIB-CTX .sapMLIBShowSeparator .sapMLIBTypeNavigation{
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 1rem 0 1rem;
+}
+.sapMCLI.sapMLIB {
+    padding: 0 1rem 0 1rem;
+}
+.sapMListInsetBG {
+     padding: 1rem 1rem 1.5rem 1rem !important;
+}
+.sapMFlexBoxAlignContentCenter {
+    -webkit-align-content: center;
+    align-content: center;
+    padding: 1rem 1rem 0rem 1rem; !important;
+}
+.sapMFlexBoxAlignContentStretch {
+    -webkit-align-content: stretch;
+    align-content: stretch;
+    padding-top: 1mm !important;
+}
+.sapMListTblCell {
+    padding: 0rem 0rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.customStyle {
+    font-weight: bold;
+    width: 100px;
+    font-size: x-large;
+    text-align: left;
+}
+element.style {
+    text-align: center;
+}
+/*html.sap-tablet .sapMInputBaseInner {*/
+    /*color: #000000;*/
+    /*background: #ffffff;*/
+    /*border: 0.5px solid #bfbfbf;*/
+    /*font-size: 0.8rem;*/
+    /*font-family: Arial,Helvetica,sans-serif;*/
+    /*line-height: normal;*/
+    /*height: 2.0rem;*/
+    /*!* padding: 0 0.75rem; *!*/
+/*}*/
+html.sap-tablet .sapMSplitContainerMaster {
+    box-sizing: border-box;
+    width: 200px !important;
+    float: left;
+    left: 0;
+}
