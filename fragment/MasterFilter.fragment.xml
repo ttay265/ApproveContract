@@ -1,0 +1,125 @@
+<core:FragmentDefinition
+        xmlns:core="sap.ui.core"
+        xmlns="sap.m"
+        xmlns:f="sap.ui.layout.form"
+        displayBlock="true">
+    <ViewSettingsDialog
+            confirm="handleConfirm"
+            cancel="handleCancel"
+            resetFilters="handleResetFilters">
+        <filterItems>
+            <!--Sold To Party Filter-->
+            <ViewSettingsCustomItem
+                    id="fSoldToParty"
+                    text="Sold To Party"
+                    key="fSoldToParty">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Document Date Filter-->
+            <ViewSettingsCustomItem
+                    id="fDocumentDate"
+                    text="Document Date"
+                    key="fDocumentDate">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <DatePicker/>
+                        <Label text="To"/>
+                        <DatePicker/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Sales Org Filter-->
+            <ViewSettingsCustomItem
+                    id="fSalesOrg"
+                    text="Sales Organization"
+                    key="fSalesOrg">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Distribution Channel Filter-->
+            <ViewSettingsCustomItem
+                    id="fDistChannel"
+                    text="Distribution Channel"
+                    key="fDistChannel">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Sales Office Filter-->
+            <ViewSettingsCustomItem
+                    id="fSalesOffice"
+                    text="Sales Office"
+                    key="fSalesOffice">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Sales Group Filter-->
+            <ViewSettingsCustomItem
+                    id="fSalesGroup"
+                    text="Sales Group"
+                    key="fSalesGroup">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Customer Group Filter-->
+            <ViewSettingsCustomItem
+                    id="fCustomerGroup"
+                    text="Customer Group"
+                    key="fCustomerGroup">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <!--Sales Order Type Filter-->
+            <ViewSettingsCustomItem
+                    id="fSalesOrderType"
+                    text="Sales Order Type"
+                    key="fSalesOrderType">
+                <customControl>
+                    <f:SimpleForm>
+                        <Label text="From"/>
+                        <Input maxLength="10"/>
+                        <Label text="To"/>
+                        <Input maxLength="10"/>
+                    </f:SimpleForm>
+                </customControl>
+            </ViewSettingsCustomItem>
+        </filterItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

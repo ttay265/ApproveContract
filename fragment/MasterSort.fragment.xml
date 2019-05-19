@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+        xmlns:core="sap.ui.core"
+        xmlns="sap.m"
+        displayBlock="true">
+    <ViewSettingsDialog
+
+            confirm="handleConfirm"
+            cancel="handleCancel"
+            resetFilters="handleResetFilters">
+        <sortItems>
+            <ViewSettingsItem text="Document Date" key="1" selected="true"/>
+            <ViewSettingsItem text="Customer" key="2"/>
+        </sortItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

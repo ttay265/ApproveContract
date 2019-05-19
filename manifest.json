@@ -80,7 +80,7 @@
         "viewType": "XML",
         "viewPath": "ZAC_APP.view",
         "controlId": "rootApp",
-        "controlAggregation": "masterPages"
+        "controlAggregation": "detailPages"
       },
       "routes": [
         {
@@ -103,7 +103,7 @@
       "targets": {
         "MasterPage": {
           "viewName": "Master",
-          "viewLevel": 1,
+          "viewLevel": 2,
           "controlId": "rootApp",
           "controlAggregation": "masterPages"
         },

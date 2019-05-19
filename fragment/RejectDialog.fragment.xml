@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+        xmlns:core="sap.ui.core"
+        xmlns:f="sap.ui.layout.form"
+        xmlns="sap.m"
+        displayBlock="true">
+    <Dialog title="Reject Contract" type="Standard">
+        <buttons>
+            <Button text="Reject" type="Reject" press="onRejectContract"/>
+            <Button type="Transparent" text="Close" press="onDialogClose"/>
+        </buttons>
+        <content>
+            <f:SimpleForm>
+                <Label text="Delivery Block"/>
+                <Select>
+                    <items>
+                        <core:Item key="Z0" text="Sales Order Block"/>
+                        <core:Item key="Z1" text="Delivery Block"/>
+                    </items>
+                </Select>
+                <Label text="{i18n>note}"/>
+                <TextArea/>
+            </f:SimpleForm>
+
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

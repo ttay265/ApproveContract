@@ -10,6 +10,16 @@ sap.ui.define([
      Common base class for the controllers of this app containing some convenience methods
      */
     return Controller.extend("ZTVBH.controller.BaseController", {
+        onInit: function () {
+            this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+        },
+        initFragment: function (sFragName, sModelName) {
+            var fragment = sap.ui.xmlfragment(this.getView().getId(), sFragName, this);
+            this.getView().addDependent(fragment);
+            fragment.setModel(new JSONModel(), sModelName);
+            fragment.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            return fragment;
+        },
         openBusyDialog: function (oSetting) {
             if (!this.busyDialog) {
                 this.busyDialog = new BusyDialog(oSetting);

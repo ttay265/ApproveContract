@@ -1,177 +1,128 @@
-<mvc:View xmlns:core="sap.ui.core"
-          xmlns:sem="sap.m.semantic"
-          xmlns:mvc="sap.ui.core.mvc"
-          xmlns:f="sap.ui.layout.form"
-          controllerName="ZAC_APP.controller.Detail" xmlns="sap.m">
-    <sem:DetailPage
-            title="{i18n>tt_resourceDetail}"
-            showHeader="true"
-            showFooter="true">
-        <sem:content>
-            <!--********************************************************-->
-            <VBox justifyContent="SpaceBetween" class="sapUiMarginBeginEnd" alignContent="Center">
-                <HBox class="sapUiTinyMarginBeginEnd" width="100%" wrap="NoWrap" justifyContent="SpaceAround">
-                    <items>
-                        <VBox width="{= ${device>/system/phone} ? '100%' : '150px' }">
-                            <Label class="sapUiTinyMarginTop" text="{i18n>lbl_slocNumber}"/>
-                            <SearchField
-                                    showRefreshButton="false"
-                                    search="onGetMLSX"
-                                    enabled="false"
-                                    showSearchButton="false"
-                                    value="{globalFilterParam>/Wempf}"
-                                    id="inp_MLSX"
-                                    width="{= ${device>/system/phone} ? '100%' : '150px' }"/>
-                        </VBox>
-                        <ToolbarSpacer width="5px"/>
-                        <VBox width="{= ${device>/system/phone} ? '100%' : '300px' }">
-                            <Label class="sapUiTinyMarginTop" text="{i18n>lbl_portion}"/>
-                            <TextArea design="Bold"
-                                      growingMaxLines="3"
-                                      id="inp_SPTL"
-                                      value="{globalFilterParam>/Ferth}"
-                                      editable="false"
-                                      width="{= ${device>/system/phone} ? '100%' : '300px' }"/>
-                        </VBox>
-                        <ToolbarSpacer width="20px"/>
-                        <VBox class="sapUiTinyMarginTop" width="{= ${device>/system/phone} ? '100%' : '300px' }">
-                            <Label class="sapUiTinyMarginTop" text="{i18n>lbl_resource}"/>
-                            <Label design="Bold" text="{globalProperties>/Arbpl}"
-                                   width="{= ${device>/system/phone} ? '100%' : '100px' }"/>
-                            <Label design="Bold" text="{globalProperties>/Ktext}"
-                                   width="{= ${device>/system/phone} ? '100%' : '100px' }"/>
-                        </VBox>
-                    </items>
-                </HBox>
-            </VBox>
-            <VBox justifyContent="SpaceBetween" class="sapUiMarginBeginEnd" alignContent="Center">
-            </VBox>
-            <f:SimpleForm layout="ResponsiveGridLayout">
-                <f:content>
-                    <Toolbar>
-                        <Title text="{resourceDetail>/indexTitle}"
-                        />
-                        <ToolbarSpacer/>
-                        <Button press="onUpAction"
-                                type="Default"
-                                icon="sap-icon://arrow-top"
-                                enabled="{resourceDetail>/upVisible}"
-                        />
-                        <Button press="onDownAction"
-                                type="Default"
-                                icon="sap-icon://arrow-bottom"
-                                enabled="{resourceDetail>/downVisible}"
-                        />
-                    </Toolbar>
-                    <Table noDataText="{i18n>tb_noData}"
-                           id="tb_rsDetailData"
-                           inset="{= !${device>/system/phone} }"
-                           showOverlay="false"
-                           items="{ path: 'resourceDetail>/', length: '20' }">
-
-                        <columns>
-                            <Column width="{= ${device>/system/phone} ? '30px' : '40px' }" hAlign="Center"
-                                    demandPopin="true" popinDisplay="Block">
-                                <Label text="{i18n>col_STT}"/>
-                            </Column>
-                            <Column width="35%" hAlign="Left" demandPopin="true" popinDisplay="Inline">
-                                <Label text="{i18n>col_IndexName}"/>
-                            </Column>
-                            <Column width="15%" hAlign="Center" demandPopin="true" minScreenWidth="tablet"
-                                    popinDisplay="Inline">
-                                <Label text="{i18n>col_GT}"/>
-                            </Column>
-                            <Column visible="{= ${resourceDetail>/Atfor} === 'NUM' }" width="10%" hAlign="Center"
-                                    demandPopin="true" popinDisplay="Inline">
-                                <Label text="{i18n>col_Min}"/>
-                            </Column>
-                            <Column visible="{= ${resourceDetail>/Atfor} === 'NUM' }" width="10%" hAlign="Center"
-                                    demandPopin="true" popinDisplay="Inline">
-                                <Label text="{i18n>col_Max}"/>
-                            </Column>
-                            <Column visible="{= ${resourceDetail>/Atfor}==='CHAR'}"
-                                    width="20%" hAlign="Center" demandPopin="true" popinDisplay="Inline">
-                                <Label/>
-                            </Column>
-                            <!--<Column width="80px" hAlign="Right" demandPopin="true" popinDisplay="Inline">-->
-                            <!--<HBox width="100%">-->
-                            <!--<items>-->
-
-                            <!--</items>-->
-                            <!--</HBox>-->
-                            <!--</Column>-->
-                        </columns>
-                        <items>
-                            <ColumnListItem vAlign="Middle">
-                                <cells>
-                                    <Text text="{resourceDetail>Stt}"/>
-                                    <Text text="{resourceDetail>Atbez}"/>
-                                    <VBox>
-                                        <Input fieldWidth="50%"
-                                               description="{resourceDetail>/Atwtb}"
-                                               textAlign="Center"
-                                               valueHelpOnly="{= ${resourceDetail>Atfor}==='CHAR' &amp;&amp; ${resourceDetail>Atson} === false }"
-                                               width="{= ${device>/system/phone} ? '5px' : '60%' }"
-                                               maxLength="20"
-                                               showValueHelp="{= ${resourceDetail>Atfor} === 'CHAR' &amp;&amp; ${resourceDetail>Atson} === false }"
-                                               valueHelpRequest="onCharValueHelp"
-                                               type="{=${resourceDetail>Atfor}==='NUM'?'Number':'Text'}"
-                                               value="{resourceDetail>Atwrt}"
-                                               id="inpAcceptValue"/>
-                                    </VBox>
-                                    <Text visible="{= ${resourceDetail>Atfor} === 'NUM' }"
-                                          text="{=${resourceDetail>Minva}>0 &amp;&amp; ${resourceDetail>Atfor}==='NUM' ? ${resourceDetail>Minva} : '' }"/>
-                                    <Text visible="{= ${resourceDetail>/Atfor} === 'NUM' }"
-                                          text="{=${resourceDetail>Maxva}>0 &amp;&amp; ${resourceDetail>Atfor}==='NUM' ? ${resourceDetail>Maxva} : '' }"/>
-                                    <Text visible="{= ${resourceDetail>/Atfor} === 'CHAR' &amp;&amp; ${resourceDetail>/Atson} === false }"
-                                          text="{resourceDetail>Atwtb}"/>
-
-                                </cells>
-                            </ColumnListItem>
-                        </items>
-                    </Table>
-                </f:content>
-            </f:SimpleForm>
-
-            <HBox width="100%">
+<mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:core="sap.ui.core"
+        xmlns:form="sap.ui.layout.form"
+        controllerName="ZAC_APP.controller.Detail" xmlns="sap.m">
+    <Page title="Contract Number" showFooter="true">
+        <content>
+            <Panel expandable="false" expanded="false">
+                <form:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="4"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="1"
+                        columnsM="2"
+                        singleContainerFullSize="false">
+                    <core:Title text=""/>
+                    <Label text="{i18n>ContractNumber}"/>
+                    <Text text="Contract Number"/>
+                    <Label text="{i18n>CustomerRefNo}"/>
+                    <Text text="Customer Ref No"/>
+                    <Label text="{i18n>CustomerRefDate}"/>
+                    <Text text="Customer Ref Date"/>
+                    <Label text="{i18n>CustomerName}"/>
+                    <Text text="Customer Name"/>
+                    <Label text="{i18n>DocumentDate}"/>
+                    <Text text="Document Date"/>
+                    <Label text="{i18n>PaymentTermDes}"/>
+                    <Text text="Payment Term Des"/>
+                    <core:Title text=""/>
+                    <Label text="{i18n>NetValue}"/>
+                    <Text text="ContractNumb"/>
+                    <Label text="{i18n>Tax}"/>
+                    <Text text="ContractNumb"/>
+                    <Label text="{i18n>Total}"/>
+                    <Text text="ContractNumb"/>
+                    <Text text="VND"/>
+                </form:SimpleForm>
+            </Panel>
+            <Panel headerText="See more" expandable="true" expanded="false">
+                <content>
+                    <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="1"
+                            columnsM="2"
+                            singleContainerFullSize="false">
+                        <Label text="{i18n>OpenItem}"/>
+                        <Text text="Open Item"/>
+                        <Label text="{i18n>SpecialOpenItem}"/>
+                        <Text text="Special Open Item"/>
+                        <Label text="{i18n>TotalOpen}"/>
+                        <Text text="Total Open"/>
+                        <Label text="{i18n>NotedItem}"/>
+                        <Text text="Noted Item"/>
+                    </form:SimpleForm>
+                </content>
+            </Panel>
+            <Table>
+                <columns>
+                    <Column>
+                        <Label text="Material No"/>
+                    </Column>
+                    <Column>
+                        <Label text="Description"/>
+                    </Column>
+                    <Column>
+                        <Label text="Quantity"/>
+                    </Column>
+                    <Column>
+                        <Label text="Uom"/>
+                    </Column>
+                    <Column>
+                        <Label text="Unit Price"/>
+                    </Column>
+                    <Column>
+                        <Label text="Net Value"/>
+                    </Column>
+                    <Column>
+                        <Label text="Tax"/>
+                    </Column>
+                    <Column>
+                        <Label text="Total"/>
+                    </Column>
+                </columns>
                 <items>
-                    <VBox width="100%" justifyContent="SpaceBetween" alignContent="Center">
-                        <items>
-                            <Label design="Bold" text="{i18n>lbl_NoteOnProcess}"/>
-                            <TextArea id="txt_Notes"
-                                      width="100%"
-                                      maxLength="255"
-                                      height="10%"/>
-                        </items>
-                    </VBox>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                            <Text text="value1"/>
+                        </cells>
+                    </ColumnListItem>
                 </items>
-            </HBox>
-        </sem:content>
-        <sem:customFooterContent>
-            <HBox width="100%" justifyContent="Center">
-                <items>
-                    <Button type="Transparent"
-                            id="btn_BCCTVH"
-                            enabled="{=${globalProperties>/Arbpl} ? true : false}"
-                            press="navToBCCTVH"
-                            text="{i18n>btn_BCCTVH}"
-                            width="100%"
-                            icon="sap-icon://manager-insight"/>
-                    <Button type="Transparent"
-                            press="navToZppc07OEEReport"
-                            text="{i18n>btn_TKCOEE}"
-                            width="100%"
-                            icon="sap-icon://survey"/>
-                </items>
-            </HBox>
-            <HBox width="100px" justifyContent="End">
-                <items>
-                    <Button type="Transparent"
-                            press="confirmSaveResource"
-                            icon="sap-icon://save"
-                            width="100px"/>
-                </items>
-            </HBox>
-        </sem:customFooterContent>
-    </sem:DetailPage>
+            </Table>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button press="onApproveContract" type="Accept" text="Accept"/>
+                <Button press="onRejectContract" type="Reject" text="Reject"/>
+            </Toolbar>
+        </footer>
+    </Page>
 </mvc:View>
