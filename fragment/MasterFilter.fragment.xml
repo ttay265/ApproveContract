@@ -16,9 +16,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -44,9 +44,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -58,9 +58,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -72,9 +72,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -86,9 +86,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -100,9 +100,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -114,9 +114,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10"/>
+                        <Input maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
