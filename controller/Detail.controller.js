@@ -7,6 +7,9 @@ sap.ui.define([
 ], function (BaseController, Filter, JSONModel, MessageToast, MessageBox) {
     "use strict";
     return BaseController.extend("ZAC_APP.controller.Detail", {
+        onInit: function() {
+          this.applyDensityClass();
+        },
         onApproveContract: function () {
             var msgApproveContractConfirm = this.getResourceBundle().getText("msgApproveContractConfirm");
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;

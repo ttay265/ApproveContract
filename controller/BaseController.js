@@ -10,7 +10,7 @@ sap.ui.define([
      Common base class for the controllers of this app containing some convenience methods
      */
     return Controller.extend("ZTVBH.controller.BaseController", {
-        onInit: function () {
+        applyDensityClass: function () {
             this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
         },
         initFragment: function (sFragName, sModelName) {

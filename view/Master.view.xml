@@ -11,11 +11,12 @@
                     growing="true"
                     mode="SingleSelectMaster"
                     growingScrollToLoad="true"
+                    items="{header>/}"
                     itemPress="navToDetail"
                     noDataText="{i18n>noResource}">
                 <items>
-                    <ObjectListItem title="Customer Name" intro="Contract Number" number="1000" numberUnit="VND">
-                        <ObjectAttribute title="{i18n>CustomerRefNo}" text="Customer Ref No"/>
+                    <ObjectListItem title="{header>CustomerName}" intro="{header>ContractNo}" number="{header>Total}" numberUnit="{header>Currency}">
+                        <ObjectAttribute title="Customer Ref No" text="{header>CustomerRefNo}"/>
                     </ObjectListItem>
 
                 </items>

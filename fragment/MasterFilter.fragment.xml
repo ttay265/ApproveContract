@@ -5,7 +5,6 @@
         displayBlock="true">
     <ViewSettingsDialog
             confirm="handleConfirm"
-            cancel="handleCancel"
             resetFilters="handleResetFilters">
         <filterItems>
             <!--Sold To Party Filter-->
@@ -16,9 +15,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/soldToParty_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/soldToParty_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -30,9 +29,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <DatePicker/>
+                        <DatePicker displayFormat="dd.MM.yyyy" dateValue="{filter>/documentDate_Low}"/>
                         <Label text="To"/>
-                        <DatePicker/>
+                        <DatePicker displayFormat="dd.MM.yyyy" dateValue="{filter>/documentDate_High}"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -44,9 +43,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOrg_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOrg_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -58,9 +57,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/distChannel_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/distChannel_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -72,9 +71,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOffice_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOffice_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -86,9 +85,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesGroup_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesGroup_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -100,9 +99,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/customerGroup_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/customerGroup_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
@@ -114,9 +113,9 @@
                 <customControl>
                     <f:SimpleForm>
                         <Label text="From"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOrderType_Low}" maxLength="10" showValueHelp="true"/>
                         <Label text="To"/>
-                        <Input maxLength="10" showValueHelp="true"/>
+                        <Input value="{filter>/salesOrderType_High}" maxLength="10" showValueHelp="true"/>
                     </f:SimpleForm>
                 </customControl>
             </ViewSettingsCustomItem>
