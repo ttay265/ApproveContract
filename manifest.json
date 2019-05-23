@@ -95,7 +95,7 @@
           ]
         },
         {
-          "pattern": "resourceDetail/{ContractId}",
+          "pattern": "detail/{ContractId}",
           "name": "detail",
           "target": [
             "MasterPage",

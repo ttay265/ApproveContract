@@ -9,6 +9,40 @@ sap.ui.define([
     return BaseController.extend("ZAC_APP.controller.Detail", {
         onInit: function() {
           this.applyDensityClass();
+            this.getRouter().getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
+        },
+        _onObjectMatched: function (e) {
+
+            var contractNo = e.getParameter("arguments").ContractId;
+            this.loadData(contractNo);
+        },
+        loadData: function (contractNo) {
+            var that = this;
+            var odataModel = this.getModel();
+            var key = odataModel.createKey("/Detail1Set", {
+                "ContractNo": contractNo
+            });
+            var onSuccess = function (o, r) {
+                var detail1Model = that.getModel("detail1");
+                var data = o;
+                if (that.checkNavData("currentContract")) {
+                    var currentContract = that.consumeNavData("currentContract");
+                    data.ContractNo = currentContract.ContractNo;
+                    data.CustomerRefNo = currentContract.CustomerRefNo;
+                    data.Currency = currentContract.Currency;
+                    data.DocumentDate = currentContract.DocumentDate;
+                    data.CustomerRefDate = currentContract.CustomerRefDate;
+                    data.PaymentTermDes = currentContract.PaymentTermDes;
+                }
+                detail1Model.setData(o, false);
+
+            }, onError = function () {
+
+            };
+            odataModel.read(key, {
+                success: onSuccess,
+                error: onError
+            });
         },
         onApproveContract: function () {
             var msgApproveContractConfirm = this.getResourceBundle().getText("msgApproveContractConfirm");

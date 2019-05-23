@@ -24,7 +24,7 @@
                         singleContainerFullSize="false">
                     <core:Title text=""/>
                     <Label text="Contract Number"/>
-                    <Text text=""/>
+                    <Text text="{detail1>ContractNo}"/>
                     <Label text="Customer Ref No"/>
                     <Text text=""/>
                     <Label text="Customer Ref Date"/>

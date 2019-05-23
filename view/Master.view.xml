@@ -2,20 +2,30 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m"
         controllerName="ZAC_APP.controller.Master">
-    <Page title="All items(1)" showHeader="true" showFooter="true">
+    <Page title="{header>/count} items" showHeader="true" showFooter="true">
         <content>
             <PullToRefresh id="_refresh"
                            refresh="onRefresh">
             </PullToRefresh>
-            <List   growingThreshold="8"
-                    growing="true"
-                    mode="SingleSelectMaster"
-                    growingScrollToLoad="true"
-                    items="{header>/}"
-                    itemPress="navToDetail"
-                    noDataText="{i18n>noResource}">
+            <List growingThreshold="8"
+                  growing="true"
+                  growingScrollToLoad="true"
+                  items="{header>/}"
+                  noDataText="{i18n>noResource}">
                 <items>
-                    <ObjectListItem title="{header>CustomerName}" intro="{header>ContractNo}" number="{header>Total}" numberUnit="{header>Currency}">
+                    <ObjectListItem press="navToDetail" type="Active" title="{header>Customername}"
+                                    intro="{header>ContractNo}"
+                                    number="{
+    parts: [
+        {path: 'header>Total'},
+        {path: 'header>Currency'}
+    ],
+    type: 'sap.ui.model.type.Currency',
+    formatOptions: {
+        showMeasure: false
+    }
+}"
+                                    numberUnit="{header>Currency}">
                         <ObjectAttribute title="Customer Ref No" text="{header>CustomerRefNo}"/>
                     </ObjectListItem>
 

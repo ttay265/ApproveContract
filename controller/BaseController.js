@@ -171,6 +171,33 @@ sap.ui.define([
             oriTime += 7; // offset = (UTC+7).
             dateObject.setHours(oriTime);
             return dateObject;
+        },
+        setNavData: function (key, value) {
+            var passModel = this.getOwnerComponent().getModel("pasModel");
+            if (!passModel) {
+                passModel = new JSONModel();
+                this.getOwnerComponent().setModel(passModel, "pasModel");
+            }
+            passModel.setProperty("/" + key, value, null, false);
+            return true;
+        },
+        checkNavData: function (key) {
+            var passModel = this.getOwnerComponent().getModel("pasModel");
+            if (!passModel) {
+                passModel = new JSONModel();
+                this.getOwnerComponent().setModel(passModel, "pasModel");
+            }
+            return passModel.getProperty("/" + key) !== undefined;
+        },
+        consumeNavData: function (key) {
+            var passModel = this.getOwnerComponent().getModel("pasModel");
+            if (!passModel) {
+                passModel = new JSONModel();
+                this.getOwnerComponent().setModel(passModel, "pasModel");
+            }
+            var value = passModel.getProperty("/" + key);
+            passModel.setProperty("/" + key, undefined, null, false);
+            return value;
         }
     });
 });

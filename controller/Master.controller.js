@@ -39,6 +39,17 @@ sap.ui.define([
             }
             this.SortDialog.open();
         },
+        navToDetail: function (e) {
+            //get contract no of thje line
+            var context = e.getSource().getBindingContext("header");
+            var ContractNo = context.getProperty("ContractNo");
+            var headerObject = context.getProperty("");
+            this.setNavData("currentContract", headerObject);
+            var router = this.getRouter();
+            router.navTo("detail", {
+                "ContractId": ContractNo
+            }, false);
+        },
         loadData: function (filters) {
             var that = this;
             var model = this.getModel();
@@ -47,6 +58,7 @@ sap.ui.define([
                     var data = o.results;
                     if (data && data.length > 0) {
                         that.getModel("header").setProperty("/", data);
+                        that.getModel("header").setProperty("/count", data.length);
                     }
                 },
                 onError = function () {
