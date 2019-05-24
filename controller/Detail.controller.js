@@ -34,7 +34,7 @@ sap.ui.define([
                     data.CustomerRefDate = currentContract.CustomerRefDate;
                     data.PaymentTermDes = currentContract.PaymentTermDes;
                 }
-                detail1Model.setData(o, false);
+                detail1Model.setData("", data);
 
             }, onError = function () {
 

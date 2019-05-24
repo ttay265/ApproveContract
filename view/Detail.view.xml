@@ -24,24 +24,24 @@
                         singleContainerFullSize="false">
                     <core:Title text=""/>
                     <Label text="Contract Number"/>
-                    <Text text="{detail1>ContractNo}"/>
+                    <Text text="{detail1>/ContractNo}"/>
                     <Label text="Customer Ref No"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/CustomerRefNo}"/>
                     <Label text="Customer Ref Date"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/CustomerRefDate}"/>
                     <Label text="Customer Name"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/CustomerName}"/>
                     <Label text="Document Date"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/DocumentDate}"/>
                     <core:Title text=""/>
                     <Label text="Payment Term Des "/>
-                    <Text text=""/>
+                    <Text text="{detail1>/PaymentTermDes}"/>
                     <Label text="Net Value"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/NetValue}"/>
                     <Label text="Tax"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/Tax}"/>
                     <Label text="Total"/>
-                    <Text text=""/>
+                    <Text text="{detail1>/Total}"/>
                     <Text text="VND"/>
                 </form:SimpleForm>
             </Panel>
@@ -64,17 +64,17 @@
                             columnsM="2"
                             singleContainerFullSize="false">
                         <Label text="{i18n>OpenItem}"/>
-                        <Text text="Open Item"/>
+                        <Text text="{detail1>OpenAmt}"/>
                         <Label text="{i18n>SpecialOpenItem}"/>
-                        <Text text="Special Open Item"/>
+                        <Text text="{detail1>SpecAmt}"/>
                         <Label text="{i18n>TotalOpen}"/>
-                        <Text text="Total Open"/>
+                        <Text text="{detail1>TotalAmt}"/>
                         <Label text="{i18n>NotedItem}"/>
-                        <Text text="Noted Item"/>
+                        <Text text="{detail1>NotedAmt}"/>
                     </form:SimpleForm>
                 </content>
             </Panel>
-            <Table>
+            <Table items="{detail2>/}">
                 <columns>
                     <Column>
                         <Label text="Material No"/>
@@ -104,14 +104,50 @@
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
-                            <Text text="value1"/>
+                            <Text text="{detail2>Material}"/>
+                            <Text text="{detail2>MaterialDescription}"/>
+                            <Text text="{detail2>TargetQuantity}"/>
+                            <Text text="{detail2>TargetQuantityUoM}"/>
+                            <Text text="{
+    parts: [
+        {path: 'detail2>NetPrice'},
+        {path: 'detail2>Currency'}
+    ],
+    type: 'sap.ui.model.type.Currency',
+    formatOptions: {
+        showMeasure: false
+    }
+}"/>
+                            <Text text="{
+    parts: [
+        {path: 'detail2>NetValue'},
+        {path: 'detail2>Currency'}
+    ],
+    type: 'sap.ui.model.type.Currency',
+    formatOptions: {
+        showMeasure: false
+    }
+}"/>
+                            <Text text="{
+    parts: [
+        {path: 'detail2>TaxAmt'},
+        {path: 'detail2>Currency'}
+    ],
+    type: 'sap.ui.model.type.Currency',
+    formatOptions: {
+        showMeasure: false
+    }
+}"/>
+                            <Text text="{
+    parts: [
+        {path: 'detail2>TotalAmt'},
+        {path: 'detail2>Currency'}
+    ],
+    type: 'sap.ui.model.type.Currency',
+    formatOptions: {
+        showMeasure: false
+    }
+}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
