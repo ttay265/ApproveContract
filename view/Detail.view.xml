@@ -3,7 +3,7 @@
         xmlns:core="sap.ui.core"
         xmlns:form="sap.ui.layout.form"
         controllerName="ZAC_APP.controller.Detail" xmlns="sap.m">
-    <Page title="Contract Number" showFooter="true">
+    <Page showNavButton="{device>/system/phone}" navButtonPress="back" title="Contract Number" showFooter="true">
         <content>
             <Panel expandable="false" expanded="false">
                 <form:SimpleForm
@@ -15,7 +15,7 @@
                         labelSpanS="12"
                         adjustLabelSpan="false"
                         emptySpanXL="0"
-                        emptySpanL="0"
+                        emptySpanL="4"
                         emptySpanM="4"
                         emptySpanS="0"
                         columnsXL="2"
@@ -28,21 +28,23 @@
                     <Label text="Customer Ref No"/>
                     <Text text="{detail1>/CustomerRefNo}"/>
                     <Label text="Customer Ref Date"/>
-                    <Text text="{detail1>/CustomerRefDate}"/>
+                    <Text text="{ path : 'detail1>/CustomerRefDate', type: 'sap.ui.model.type.Date',  formatOptions: { pattern: 'dd.MM.yyyy' }}"/>
                     <Label text="Customer Name"/>
                     <Text text="{detail1>/CustomerName}"/>
                     <Label text="Document Date"/>
-                    <Text text="{detail1>/DocumentDate}"/>
+                    <Text text="{ path : 'detail1>/DocumentDate', type: 'sap.ui.model.type.Date',  formatOptions: { pattern: 'dd.MM.yyyy' }}"/>
                     <core:Title text=""/>
                     <Label text="Payment Term Des "/>
                     <Text text="{detail1>/PaymentTermDes}"/>
                     <Label text="Net Value"/>
-                    <Text text="{detail1>/NetValue}"/>
+                    <Text text="{ parts: [ {path:'detail1>/NetValue'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                          textAlign="End" wrapping="false"/>
                     <Label text="Tax"/>
-                    <Text text="{detail1>/Tax}"/>
+                    <Text text="{ parts: [ {path:'detail1>/TaxAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                          textAlign="End" wrapping="false"/>
                     <Label text="Total"/>
-                    <Text text="{detail1>/Total}"/>
-                    <Text text="VND"/>
+                    <Text text="{ parts: [ {path:'detail1>/TotalAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                          textAlign="End" wrapping="false"/>
                 </form:SimpleForm>
             </Panel>
             <Panel headerText="See more" expandable="true" expanded="false">
@@ -64,19 +66,23 @@
                             columnsM="2"
                             singleContainerFullSize="false">
                         <Label text="{i18n>OpenItem}"/>
-                        <Text text="{detail1>OpenAmt}"/>
+                        <Text text="{ parts: [ {path:'detail1>/OpenAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                              textAlign="End" wrapping="false"/>
                         <Label text="{i18n>SpecialOpenItem}"/>
-                        <Text text="{detail1>SpecAmt}"/>
+                        <Text text="{ parts: [ {path:'detail1>/SpecAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                              textAlign="End" wrapping="false"/>
                         <Label text="{i18n>TotalOpen}"/>
-                        <Text text="{detail1>TotalAmt}"/>
+                        <Text text="{ parts: [ {path:'detail1>/TotalAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                              textAlign="End" wrapping="false"/>
                         <Label text="{i18n>NotedItem}"/>
-                        <Text text="{detail1>NotedAmt}"/>
+                        <Text text="{ parts: [ {path:'detail1>/NotedAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                              textAlign="End" wrapping="false"/>
                     </form:SimpleForm>
                 </content>
             </Panel>
             <Table items="{detail2>/}">
                 <columns>
-                    <Column>
+                    <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="720px">
                         <Label text="Material No"/>
                     </Column>
                     <Column>

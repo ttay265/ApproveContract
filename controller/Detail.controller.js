@@ -3,12 +3,17 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
-], function (BaseController, Filter, JSONModel, MessageToast, MessageBox) {
+    "sap/m/MessageBox",
+    "ZAC_APP/model/formatter"
+], function (BaseController, Filter, JSONModel, MessageToast, MessageBox, formatter) {
     "use strict";
+
     return BaseController.extend("ZAC_APP.controller.Detail", {
+        formatter: formatter,
         onInit: function() {
           this.applyDensityClass();
+            this.setModel(new JSONModel(), "detail1");
+            this.setModel(new JSONModel(), "detail2");
             this.getRouter().getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
         },
         _onObjectMatched: function (e) {
@@ -17,6 +22,10 @@ sap.ui.define([
             this.loadData(contractNo);
         },
         loadData: function (contractNo) {
+            this.loadDetail1(contractNo);
+            this.loadDetail2(contractNo);
+        },
+        loadDetail1: function (contractNo) {
             var that = this;
             var odataModel = this.getModel();
             var key = odataModel.createKey("/Detail1Set", {
@@ -27,19 +36,42 @@ sap.ui.define([
                 var data = o;
                 if (that.checkNavData("currentContract")) {
                     var currentContract = that.consumeNavData("currentContract");
-                    data.ContractNo = currentContract.ContractNo;
                     data.CustomerRefNo = currentContract.CustomerRefNo;
                     data.Currency = currentContract.Currency;
                     data.DocumentDate = currentContract.DocumentDate;
-                    data.CustomerRefDate = currentContract.CustomerRefDate;
-                    data.PaymentTermDes = currentContract.PaymentTermDes;
+                    detail1Model.updateBindings(true);
                 }
-                detail1Model.setData("", data);
+                detail1Model.setProperty("/", data);
 
             }, onError = function () {
 
             };
             odataModel.read(key, {
+                success: onSuccess,
+                error: onError
+            });
+        },
+        loadDetail2: function (contractNo) {
+            var that = this;
+            var odataModel = this.getModel();
+            var filters = [];
+            var contractNoFilter = new Filter({
+                path: "ContractNo",
+                operator: "EQ",
+                value1: contractNo
+            });
+            filters.push(contractNoFilter);
+            var onSuccess = function (o, r) {
+                var detail2Model = that.getModel("detail2");
+                var data = o.results;
+                detail2Model.setProperty("/", data);
+                detail2Model.setProperty("/count", data.length);
+                detail2Model.updateBindings(true);
+            }, onError = function () {
+
+            };
+            odataModel.read("/Detail2Set", {
+                filters: filters,
                 success: onSuccess,
                 error: onError
             });
