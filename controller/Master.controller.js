@@ -23,6 +23,14 @@ sap.ui.define([
             this.setModel(new JSONModel(), "header");
             this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
         },
+        retrieveSAPLogonUser: function () {
+            var userLogon = "";
+            try {
+                userLogon = new sap.ushell.services.UserInfo().getId();
+            } catch (e) {
+            }
+            return userLogon;
+        },
         _onObjectMatched: function () {
             var filters = this.getFilter();
             this.loadData(filters);
@@ -81,6 +89,15 @@ sap.ui.define([
             var filterData = {};
             if (filterModel) {
                 filterData = filterModel.getProperty("/");
+            }
+            var userLogon = this.retrieveSAPLogonUser();
+            if (userLogon !== "") {
+                var filterUser = new Filter({
+                    path: "Username",
+                    operator: FilterOperator.EQ,
+                    value1: userLogon
+                });
+                filters.push(filterUser);
             }
             if (filterData.soldToParty_Low && filterData.soldToParty_Low !== "") {
                 var filterCustomer = {

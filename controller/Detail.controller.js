@@ -10,22 +10,30 @@ sap.ui.define([
 
     return BaseController.extend("ZAC_APP.controller.Detail", {
         formatter: formatter,
-        onInit: function() {
-          this.applyDensityClass();
+        onInit: function () {
+            this.applyDensityClass();
             this.setModel(new JSONModel(), "detail1");
             this.setModel(new JSONModel(), "detail2");
             this.getRouter().getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
         },
         _onObjectMatched: function (e) {
-
+            //Set Busy whenever new detail loaded
             var contractNo = e.getParameter("arguments").ContractId;
             this.loadData(contractNo);
         },
         loadData: function (contractNo) {
-            this.loadDetail1(contractNo);
-            this.loadDetail2(contractNo);
+            var that = this;
+            this.openBusyDialog({
+                text: "Loading...",
+                showCancelButton: true
+            });
+            var postProcessing = function (that) {
+                that.closeBusyDialog();
+            };
+            this.loadDetail1(contractNo, postProcessing);
+            this.loadDetail2(contractNo, postProcessing);
         },
-        loadDetail1: function (contractNo) {
+        loadDetail1: function (contractNo, mCallback) {
             var that = this;
             var odataModel = this.getModel();
             var key = odataModel.createKey("/Detail1Set", {
@@ -42,16 +50,16 @@ sap.ui.define([
                     detail1Model.updateBindings(true);
                 }
                 detail1Model.setProperty("/", data);
-
+                mCallback(that);
             }, onError = function () {
-
+                mCallback(that);
             };
             odataModel.read(key, {
                 success: onSuccess,
                 error: onError
             });
         },
-        loadDetail2: function (contractNo) {
+        loadDetail2: function (contractNo, mCallback) {
             var that = this;
             var odataModel = this.getModel();
             var filters = [];
@@ -67,8 +75,9 @@ sap.ui.define([
                 detail2Model.setProperty("/", data);
                 detail2Model.setProperty("/count", data.length);
                 detail2Model.updateBindings(true);
+                mCallback(that);
             }, onError = function () {
-
+                mCallback(that);
             };
             odataModel.read("/Detail2Set", {
                 filters: filters,
