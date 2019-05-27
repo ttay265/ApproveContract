@@ -23,15 +23,16 @@ sap.ui.define([
         },
         loadData: function (contractNo) {
             var that = this;
-            this.openBusyDialog({
-                text: "Loading...",
-                showCancelButton: true
+            that.byId("detail1_a").setBusy(true);
+            that.byId("detail1_b").setBusy(true);
+            that.byId("detail2").setBusy(true);
+            this.loadDetail1(contractNo, function (that) {
+
+                that.loadDetail2(contractNo, function (that) {
+                    that.byId("detail2").setBusy(false);
+                });
             });
-            var postProcessing = function (that) {
-                that.closeBusyDialog();
-            };
-            this.loadDetail1(contractNo, postProcessing);
-            this.loadDetail2(contractNo, postProcessing);
+
         },
         loadDetail1: function (contractNo, mCallback) {
             var that = this;
@@ -50,9 +51,12 @@ sap.ui.define([
                     detail1Model.updateBindings(true);
                 }
                 detail1Model.setProperty("/", data);
+                that.byId("detail1_a").setBusy(false);
+                that.byId("detail1_b").setBusy(false);
                 mCallback(that);
             }, onError = function () {
-                mCallback(that);
+                that.byId("detail1_a").setBusy(false);
+                that.byId("detail1_b").setBusy(false);
             };
             odataModel.read(key, {
                 success: onSuccess,
@@ -86,10 +90,12 @@ sap.ui.define([
             });
         },
         onApproveContract: function () {
+            var that = this;
             var msgApproveContractConfirm = this.getResourceBundle().getText("msgApproveContractConfirm");
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
             var onClose = function (oAction) {
                 if (oAction === MessageBox.Action.OK) {
+                    that.approveContract();
                     MessageToast.show("Confirmed");
                 } else if (oAction === MessageBox.Action.Cancel) {
                     //cancel
@@ -102,11 +108,63 @@ sap.ui.define([
                 }
             );
         },
+        approveContract: function () {
+            var oDataModel = this.getModel();
+            var sendData = {
+                "ContractNo": "",
+                "ObjectNo": ""
+            };
+            oDataModel.callFunction("ApproveContract", // function import name
+                "POST", // http method
+                sendData, // function import parameters
+                null,
+                function (oData, response) {
+                }, // callback function for success
+                function (oError) {
+                });
+        },
         onRejectContract: function () {
+            var that = this;
+            var msgApproveContractConfirm = this.getResourceBundle().getText("msgApproveContractConfirm");
+            var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+            var onClose = function (oAction) {
+                if (oAction === MessageBox.Action.OK) {
+                    that.rejectContract();
+                    MessageToast.show("Confirmed");
+                } else if (oAction === MessageBox.Action.Cancel) {
+                    //cancel
+                }
+            };
+            MessageBox.confirm(
+                msgApproveContractConfirm, {
+                    styleClass: bCompact ? "sapUiSizeCompact" : "",
+                    onClose: onClose
+                }
+            );
+        },
+        onOpenRejectDialog: function () {
+            var that = this;
             if (!this.RejectDialog) {
                 this.RejectDialog = this.initFragment("ZAC_APP.fragment.RejectDialog", "reject");
             }
             this.RejectDialog.open();
+        },
+        rejectContract: function () {
+            var oDataModel = this.getModel();
+            var sendData = {
+                "ContractNo": "",
+                "DeliveryBlock": "",
+                "ObjectNo": "",
+                "Reason": ""
+            };
+            oDataModel.callFunction("RejectContract", // function import name
+                "POST", // http method
+                sendData, // function import parameters
+                null,
+                function (oData, response) {
+                }, // callback function for success
+                function (oError) {
+                });
         },
 
 

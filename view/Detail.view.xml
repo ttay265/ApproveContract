@@ -5,7 +5,7 @@
         controllerName="ZAC_APP.controller.Detail" xmlns="sap.m">
     <Page showNavButton="{device>/system/phone}" navButtonPress="back" title="Contract Number" showFooter="true">
         <content>
-            <Panel expandable="false" expanded="false">
+            <Panel id="detail1_a" expandable="false" expanded="false">
                 <form:SimpleForm
                         editable="false"
                         layout="ResponsiveGridLayout"
@@ -47,7 +47,7 @@
                           textAlign="End" wrapping="false"/>
                 </form:SimpleForm>
             </Panel>
-            <Panel headerText="See more" expandable="true" expanded="false">
+            <Panel id="detail1_b" headerText="See more" expandable="true" expanded="false">
                 <content>
                     <form:SimpleForm
                             editable="false"
@@ -80,7 +80,7 @@
                     </form:SimpleForm>
                 </content>
             </Panel>
-            <Table items="{detail2>/}">
+            <Table items="{detail2>/}" id="detail2">
                 <columns>
                     <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="720px">
                         <Label text="Material No"/>
@@ -163,7 +163,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button press="onApproveContract" type="Accept" text="Accept"/>
-                <Button press="onRejectContract" type="Reject" text="Reject"/>
+                <Button press="onOpenRejectDialog" type="Reject" text="Reject"/>
             </Toolbar>
         </footer>
     </Page>
