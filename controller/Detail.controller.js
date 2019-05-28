@@ -122,7 +122,7 @@ sap.ui.define([
                 "ObjectNo": AuthorizationKey
             };
             oDataModel.callFunction("/ApproveContract", {
-                method: "GET",
+                method: "POST",
                 urlParameters: sendData,
                 success: function (oData, response) {
                     mCallBack();
@@ -138,7 +138,11 @@ sap.ui.define([
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
             var onClose = function (oAction) {
                 if (oAction === MessageBox.Action.OK) {
-                    that.rejectContract();
+                    var mCallback = function () {
+                        MessageToast.show("Confirmed");
+                        that.getRouter().navTo("master", true);
+                    };
+                    that.rejectContract(mCallback);
                     MessageToast.show("Confirmed");
                 } else if (oAction === MessageBox.Action.Cancel) {
                     //cancel
@@ -158,7 +162,7 @@ sap.ui.define([
             }
             this.RejectDialog.open();
         },
-        rejectContract: function () {
+        rejectContract: function (mCallback) {
             var detail1Model = this.getModel("detail1");
             var AuthorizationKey = detail1Model.getProperty("/AuthorizationKey");
             var ContractNo = detail1Model.getProperty("/ContractNo");
@@ -171,14 +175,16 @@ sap.ui.define([
                 "ObjectNo": AuthorizationKey,
                 "Reason": Reason
             };
-            oDataModel.callFunction("/RejectContract", // function import name
-                "POST", // http method
-                sendData, // function import parameters
-                null,
-                function (oData, response) {
+            oDataModel.callFunction("/RejectContract", {
+                method: "POST",
+                urlParameters: sendData,
+                success: function (oData, response) {
+                    mCallback();
                 }, // callback function for success
-                function (oError) {
-                });
+                error: function (oError) {
+                }
+            });
+
         },
 
 
