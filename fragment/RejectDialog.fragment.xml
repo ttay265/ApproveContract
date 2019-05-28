@@ -11,14 +11,14 @@
         <content>
             <f:SimpleForm>
                 <Label text="Delivery Block"/>
-                <Select>
+                <Select id="selectDeliveryBlock">
                     <items>
                         <core:Item key="Z0" text="Sales Order Block"/>
                         <core:Item key="Z1" text="Delivery Block"/>
                     </items>
                 </Select>
                 <Label text="{i18n>note}"/>
-                <TextArea/>
+                <TextArea id="note"/>
             </f:SimpleForm>
 
         </content>

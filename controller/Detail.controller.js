@@ -95,8 +95,12 @@ sap.ui.define([
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
             var onClose = function (oAction) {
                 if (oAction === MessageBox.Action.OK) {
-                    that.approveContract();
-                    MessageToast.show("Confirmed");
+                    var mCallback = function () {
+                        MessageToast.show("Confirmed");
+                        that.getRouter().navTo("master", true);
+                    };
+                    that.approveContract(mCallback);
+
                 } else if (oAction === MessageBox.Action.Cancel) {
                     //cancel
                 }
@@ -108,20 +112,25 @@ sap.ui.define([
                 }
             );
         },
-        approveContract: function () {
+        approveContract: function (mCallBack) {
+            var detail1Model = this.getModel("detail1");
+            var AuthorizationKey = detail1Model.getProperty("/AuthorizationKey");
+            var ContractNo = detail1Model.getProperty("/ContractNo");
             var oDataModel = this.getModel();
             var sendData = {
-                "ContractNo": "",
-                "ObjectNo": ""
+                "ContractNo": ContractNo,
+                "ObjectNo": AuthorizationKey
             };
-            oDataModel.callFunction("ApproveContract", // function import name
-                "POST", // http method
-                sendData, // function import parameters
-                null,
-                function (oData, response) {
+            oDataModel.callFunction("/ApproveContract", {
+                method: "GET",
+                urlParameters: sendData,
+                success: function (oData, response) {
+                    mCallBack();
                 }, // callback function for success
-                function (oError) {
+                error: function (oError) {
+                }
                 });
+            // function import name
         },
         onRejectContract: function () {
             var that = this;
@@ -150,14 +159,19 @@ sap.ui.define([
             this.RejectDialog.open();
         },
         rejectContract: function () {
+            var detail1Model = this.getModel("detail1");
+            var AuthorizationKey = detail1Model.getProperty("/AuthorizationKey");
+            var ContractNo = detail1Model.getProperty("/ContractNo");
+            var deliveryBlock = this.byId("selectDeliveryBlock").getSelectedKey();
+            var Reason = this.byId("note").getValue();
             var oDataModel = this.getModel();
             var sendData = {
-                "ContractNo": "",
-                "DeliveryBlock": "",
-                "ObjectNo": "",
-                "Reason": ""
+                "ContractNo": ContractNo,
+                "DeliveryBlock": deliveryBlock,
+                "ObjectNo": AuthorizationKey,
+                "Reason": Reason
             };
-            oDataModel.callFunction("RejectContract", // function import name
+            oDataModel.callFunction("/RejectContract", // function import name
                 "POST", // http method
                 sendData, // function import parameters
                 null,

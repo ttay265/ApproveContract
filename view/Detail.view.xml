@@ -88,22 +88,22 @@
                     <Column>
                         <Label text="Description"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <Label text="Quantity"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="Center">
                         <Label text="Uom"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <Label text="Unit Price"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <Label text="Net Value"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <Label text="Tax"/>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <Label text="Total"/>
                     </Column>
                 </columns>
