@@ -65,16 +65,11 @@
         "type": "sap.ui.model.odata.v2.ODataModel",
         "settings": {
           "useBatch": false,
-          "user": "CT.Fiori",
-          "password": "Citek123456789a@",
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "None",
-          "setRefreshAfterChange": true,
-          "headers": {
-            "sap-client": "300"
-          }
+          "setRefreshAfterChange": true
         },
-        "uri": "https://erpdev.hoaphat.com.vn:44333/sap/opu/odata/SAP/ZAPPRV_CONTRACT_SRV"
+        "uri": "/sap/opu/odata/SAP/ZAPPRV_CONTRACT_SRV"
       }
     },
     "routing": {
