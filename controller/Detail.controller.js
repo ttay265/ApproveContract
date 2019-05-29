@@ -48,6 +48,7 @@ sap.ui.define([
                     data.CustomerRefNo = currentContract.CustomerRefNo;
                     data.Currency = currentContract.Currency;
                     data.DocumentDate = currentContract.DocumentDate;
+                    data.ObjectNumber = currentContract.ObjectNumber;
                     detail1Model.updateBindings(true);
                 }
                 detail1Model.setProperty("/", data);
@@ -114,12 +115,12 @@ sap.ui.define([
         },
         approveContract: function (mCallBack) {
             var detail1Model = this.getModel("detail1");
-            var AuthorizationKey = detail1Model.getProperty("/AuthorizationKey");
+            var ObjectNumber = detail1Model.getProperty("/ObjectNumber");
             var ContractNo = detail1Model.getProperty("/ContractNo");
             var oDataModel = this.getModel();
             var sendData = {
                 "ContractNo": ContractNo,
-                "ObjectNo": AuthorizationKey
+                "ObjectNo": ObjectNumber
             };
             oDataModel.callFunction("/ApproveContract", {
                 method: "POST",
@@ -129,7 +130,7 @@ sap.ui.define([
                 }, // callback function for success
                 error: function (oError) {
                 }
-                });
+            });
             // function import name
         },
         onRejectContract: function () {
@@ -164,7 +165,7 @@ sap.ui.define([
         },
         rejectContract: function (mCallback) {
             var detail1Model = this.getModel("detail1");
-            var AuthorizationKey = detail1Model.getProperty("/AuthorizationKey");
+            var ObjectNumber = detail1Model.getProperty("/ObjectNumber");
             var ContractNo = detail1Model.getProperty("/ContractNo");
             var deliveryBlock = this.byId("selectDeliveryBlock").getSelectedKey();
             var Reason = this.byId("note").getValue();
@@ -172,7 +173,7 @@ sap.ui.define([
             var sendData = {
                 "ContractNo": ContractNo,
                 "DeliveryBlock": deliveryBlock,
-                "ObjectNo": AuthorizationKey,
+                "ObjectNo": ObjectNumber,
                 "Reason": Reason
             };
             oDataModel.callFunction("/RejectContract", {
