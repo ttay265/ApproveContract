@@ -96,8 +96,8 @@ sap.ui.define([
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
             var onClose = function (oAction) {
                 if (oAction === MessageBox.Action.OK) {
-                    var mCallback = function () {
-                        MessageToast.show("Confirmed");
+                    var mCallback = function (oData) {
+                        MessageToast.show("Contract " + oData.ContractNo + ": " + oData.Message);
                         that.getRouter().navTo("master", true);
                     };
                     that.approveContract(mCallback);
@@ -126,9 +126,12 @@ sap.ui.define([
                 method: "POST",
                 urlParameters: sendData,
                 success: function (oData, response) {
-                    mCallBack();
+                    if (oData.Return === "00") {
+                        mCallBack(oData);
+                    }
                 }, // callback function for success
                 error: function (oError) {
+                    MessageToast.show("Error" + oError.toString());
                 }
             });
             // function import name
@@ -139,8 +142,8 @@ sap.ui.define([
             var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
             var onClose = function (oAction) {
                 if (oAction === MessageBox.Action.OK) {
-                    var mCallback = function () {
-                        MessageToast.show("Confirmed");
+                    var mCallback = function (oData) {
+                        MessageToast.show("Contract " + oData.ContractNo + ": " + oData.Message);
                         that.getRouter().navTo("master", true);
                     };
                     that.rejectContract(mCallback);
@@ -163,7 +166,7 @@ sap.ui.define([
             }
             this.RejectDialog.open();
         },
-        rejectContract: function (mCallback) {
+        rejectContract: function (mCallBack) {
             var detail1Model = this.getModel("detail1");
             var ObjectNumber = detail1Model.getProperty("/ObjectNumber");
             var ContractNo = detail1Model.getProperty("/ContractNo");
@@ -180,14 +183,14 @@ sap.ui.define([
                 method: "POST",
                 urlParameters: sendData,
                 success: function (oData, response) {
-                    mCallback();
+                    if (oData.Return === "00") {
+                        mCallBack(oData);
+                    }
                 }, // callback function for success
                 error: function (oError) {
                 }
             });
 
         },
-
-
     });
 });
