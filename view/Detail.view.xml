@@ -82,7 +82,7 @@
             </Panel>
             <Table items="{detail2>/}" id="detail2">
                 <columns>
-                    <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="720px">
+                    <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="1440px">
                         <Label text="Material No"/>
                     </Column>
                     <Column>
@@ -91,19 +91,21 @@
                     <Column hAlign="End">
                         <Label text="Quantity"/>
                     </Column>
-                    <Column hAlign="Center">
+                    <Column hAlign="Center" demandPopin="true" popinDisplay="Inline" minScreenWidth="14400px">
                         <Label text="Uom"/>
                     </Column>
-                    <Column hAlign="End">
+                    <Column hAlign="End" demandPopin="true" popinDisplay="Inline" minScreenWidth="14400px">
                         <Label text="Unit Price"/>
                     </Column>
-                    <Column hAlign="End">
+                    <Column width="10rem" hAlign="End">
                         <Label text="Net Value"/>
                     </Column>
-                    <Column hAlign="End">
+                    <Column width="10rem" demandPopin="true" popinDisplay="Inline" minScreenWidth="14400px"
+                            hAlign="End">
                         <Label text="Tax"/>
                     </Column>
-                    <Column hAlign="End">
+                    <Column width="10rem" demandPopin="true" popinDisplay="Inline" minScreenWidth="14400px"
+                            hAlign="End">
                         <Label text="Total"/>
                     </Column>
                 </columns>
