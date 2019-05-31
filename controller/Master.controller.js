@@ -23,6 +23,11 @@ sap.ui.define([
             this.setModel(new JSONModel(), "header");
             this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
         },
+        onRefresh: function (oEvent) {
+            var filters = this.getFilter();
+            this.loadData(filters);
+            oEvent.getSource().hide();
+        },
         retrieveSAPLogonUser: function () {
             var userLogon = "";
             try {

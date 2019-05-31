@@ -8,8 +8,8 @@
     "applicationVersion": {
       "version": "1.0.0"
     },
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
+    "title": "Approve Contract",
+    "description": "Approve Contract",
     "sourceTemplate": {
       "id": "ui5template.basicSAPUI5ApplicationProject",
       "version": "1.32.0"
