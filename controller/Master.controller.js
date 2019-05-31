@@ -52,6 +52,9 @@ sap.ui.define([
             }
             this.SortDialog.open();
         },
+        handleConfirmSort: function(oEvent) {
+            var sortItems = oEvent.getSortItems();
+        },
         navToDetail: function (e) {
             //get contract no of thje line
             var context = e.getSource().getBindingContext("header");
