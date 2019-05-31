@@ -90,15 +90,15 @@ sap.ui.define([
             if (filterModel) {
                 filterData = filterModel.getProperty("/");
             }
-            var userLogon = this.retrieveSAPLogonUser();
-            if (userLogon !== "") {
-                var filterUser = new Filter({
-                    path: "Username",
-                    operator: FilterOperator.EQ,
-                    value1: userLogon
-                });
-                filters.push(filterUser);
-            }
+            // var userLogon = this.retrieveSAPLogonUser();
+            // if (userLogon !== "") {
+            //     var filterUser = new Filter({
+            //         path: "Username",
+            //         operator: FilterOperator.EQ,
+            //         value1: userLogon
+            //     });
+            //     filters.push(filterUser);
+            // }
             if (filterData.soldToParty_Low && filterData.soldToParty_Low !== "") {
                 var filterCustomer = {
                     path: "Customer",
