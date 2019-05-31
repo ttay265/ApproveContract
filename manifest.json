@@ -8,8 +8,8 @@
     "applicationVersion": {
       "version": "1.0.0"
     },
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
+    "title": "Approve Contract",
+    "description": "Approve Contract",
     "sourceTemplate": {
       "id": "ui5template.basicSAPUI5ApplicationProject",
       "version": "1.32.0"
@@ -65,11 +65,16 @@
         "type": "sap.ui.model.odata.v2.ODataModel",
         "settings": {
           "useBatch": false,
+          "user": "CT.Fiori",
+          "password": "Citek123456789a@",
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "None",
-          "setRefreshAfterChange": true
+          "setRefreshAfterChange": true,
+          "headers": {
+            "sap-client": "300"
+          }
         },
-        "uri": "/sap/opu/odata/SAP/ZAPPRV_CONTRACT_SRV"
+        "uri": "https://erpdev.hoaphat.com.vn:44333/sap/opu/odata/SAP/ZAPPRV_CONTRACT_SRV"
       }
     },
     "routing": {
