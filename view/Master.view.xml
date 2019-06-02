@@ -8,6 +8,7 @@
                            refresh="onRefresh">
             </PullToRefresh>
             <List growingThreshold="8"
+                  id="tableMaster"
                   growing="true"
                   growingScrollToLoad="true"
                   items="{header>/}"

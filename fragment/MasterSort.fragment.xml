@@ -3,10 +3,11 @@
         xmlns="sap.m"
         displayBlock="true">
     <ViewSettingsDialog
+            id="sortDialog"
             confirm="handleConfirmSort">
         <sortItems>
-            <ViewSettingsItem text="Document Date" key="1" selected="true"/>
-            <ViewSettingsItem text="Customer" key="2"/>
+            <ViewSettingsItem text="Document Date" key="DocumentDate" selected="true"/>
+            <ViewSettingsItem text="Customer" key="Customername"/>
         </sortItems>
     </ViewSettingsDialog>
 </core:FragmentDefinition>

@@ -28,6 +28,7 @@ sap.ui.define([
             this.loadData(filters);
             oEvent.getSource().hide();
         },
+
         retrieveSAPLogonUser: function () {
             var userLogon = "";
             try {
@@ -52,8 +53,22 @@ sap.ui.define([
             }
             this.SortDialog.open();
         },
-        handleConfirmSort: function(oEvent) {
-            var sortItems = oEvent.getSortItems();
+        handleConfirmSort: function (oEvent) {
+            var sortDialog = oEvent.getSource();
+            var sortId = sortDialog.getSelectedSortItem();
+            var sortDescending = sortDialog.getSortDescending();
+            var sortItem = sap.ui.getCore().byId(sortId);
+            var sortField = sortItem.getKey();
+            //process sort
+            var sorters = [];
+            var sorter = new sap.ui.model.Sorter(sortField, sortDescending);
+            sorters.push(sorter);
+            //sort table
+            var table = this.byId("tableMaster");
+            var binding = table.getBinding("items");
+            if (binding) {
+                binding.sort(sorters);
+            }
         },
         navToDetail: function (e) {
             //get contract no of thje line
@@ -87,7 +102,7 @@ sap.ui.define([
                 }
             )
         },
-        handleConfirm: function () {
+        handleConfirmFilter: function () {
             var filters = this.getFilter();
             this.loadData(filters);
         },
@@ -206,5 +221,4 @@ sap.ui.define([
             return filters;
         }
     });
-
 });

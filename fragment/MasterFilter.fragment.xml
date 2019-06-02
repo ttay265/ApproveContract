@@ -4,7 +4,7 @@
         xmlns:f="sap.ui.layout.form"
         displayBlock="true">
     <ViewSettingsDialog
-            confirm="handleConfirm"
+            confirm="handleConfirmFilter"
             resetFilters="handleResetFilters">
         <filterItems>
             <!--Sold To Party Filter-->
