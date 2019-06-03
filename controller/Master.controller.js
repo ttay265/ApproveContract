@@ -20,6 +20,7 @@ sap.ui.define([
             this.fSalesOrderType = this.byId("fSalesOrderType");
             this.FilterDialog = this.initFragment("ZAC_APP.fragment.MasterFilter", "filter");
             this.SortDialog = this.initFragment("ZAC_APP.fragment.MasterSort", "sort");
+            this.valueHelpDialog = this.initFragment("ZAC_APP.fragment.ValueHelp", "valueHelp");
             this.setModel(new JSONModel(), "header");
             this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
         },
@@ -73,6 +74,35 @@ sap.ui.define([
         beforeOpen: function (e) {
             //Binding data
             e.getSource().setBusy(true);
+            var searchValue = this.currentVH.getValue();
+            this.onLoadValueHelp(searchValue);
+        },
+        filterValueHelp: function (searchValue) {
+            var andFilter = [];
+            if (searchValue) {
+                var orFilter = [];
+                orFilter.push(new Filter({
+                    path: 'Id',
+                    operator: FilterOperator.Contains,
+                    value1: searchValue
+                }));
+                orFilter.push(new Filter({
+                    path: 'Name',
+                    operator: FilterOperator.Contains,
+                    value1: searchValue
+                }));
+                andFilter.push(new Filter(orFilter, false));
+            }
+            var tblValueHelp = this.byId("tblValueHelp");
+            var binding = tblValueHelp.getBinding("items");
+            binding.filter(andFilter);
+        },
+        onValueHelpSearch: function (e) {
+            var SearchValue = e.getParameter("query");
+            this.filterValueHelp(SearchValue);
+        },
+        onLoadValueHelp: function (searchValue) {
+            var odataModel = this.getModel();
             var that = this;
             var entitySetDirectory = "";
             var filterTitle = "";
@@ -81,15 +111,17 @@ sap.ui.define([
                     var vhModel = that.valueHelpDialog.getModel("valueHelp");
                     vhModel.setProperty("/", d.results);
                     vhModel.setProperty("/label", filterTitle);
+                    that.byId("searchValueHelp").setValue(searchValue);
+                    if (searchValue) {
+                        that.filterValueHelp(searchValue);
+                    }
                     that.valueHelpDialog.setBusy(false);
                 },
                 onError = function (e) {
                     MessageToast.show(e.toString());
-                    e.getSource().setBusy(false);
+                    that.valueHelpDialog.setBusy(false);
                 };
-            var odataModel = this.getModel();
             var currentFilterControlId = this.currentVH.getParent().getParent().getParent().getParent().getId();
-            var entitySetDirectory = "";
             var currentFilterId = currentFilterControlId.split("--", 2)[1];
             switch (currentFilterId) {
                 case 'SoldToParty': {
@@ -122,6 +154,11 @@ sap.ui.define([
                     filterTitle = "Customer Group";
                     break;
                 }
+                case 'SalesOrderType': {
+                    entitySetDirectory = "/SalesOrderTypeValueHelpSet";
+                    filterTitle = "Sales Order Type";
+                    break;
+                }
                 default:
                     return;
             }
@@ -136,10 +173,33 @@ sap.ui.define([
             var id = context.getProperty("Id");
             source.setValue(id);
             this.valueHelpDialog.close();
+            this.validateFilterValue();
+        },
+        validateFilterValue: function () {
+            var filterModel = this.FilterDialog.getModel("filter");
+            var filterData = {};
+            if (filterModel) {
+                filterData = filterModel.getProperty("/");
+            }
+            if ((filterData.soldToParty_Low > filterData.soldToParty_High && filterData.soldToParty_High && filterData.soldToParty_Low) ||
+                (filterData.documentDate_Low > filterData.documentDate_High && filterData.documentDate_High && filterData.documentDate_Low) ||
+                (filterData.salesOrg_Low > filterData.salesOrg_High && filterData.salesOrg_High && filterData.salesOrg_Low) ||
+                (filterData.distChannel_Low > filterData.distChannel_High && filterData.distChannel_High && filterData.distChannel_Low) ||
+                (filterData.salesOffice_Low > filterData.salesOffice_High && filterData.salesOffice_High && filterData.salesOffice_Low) ||
+                (filterData.salesGroup_Low > filterData.salesGroup_High && filterData.salesGroup_High && filterData.salesGroup_Low) ||
+                (filterData.customerGroup_Low > filterData.customerGroup_High && filterData.customerGroup_High && filterData.customerGroup_Low) ||
+                (filterData.salesOrderType_Low > filterData.salesOrderType_High && filterData.salesOrderType_High && filterData.salesOrderType_Low)) {
+                MessageBox.error("Lower limit is greater than upper limit");
+                return false;
+            } else {
+                return true;
+            }
         },
         onValueHelpPressed: function (oEvent) {
             this.currentVH = oEvent.getSource();
-            this.valueHelpDialog = this.initFragment("ZAC_APP.fragment.ValueHelp", "valueHelp");
+            if (!this.valueHelpDialog) {
+                this.valueHelpDialog = this.initFragment("ZAC_APP.fragment.ValueHelp", "valueHelp");
+            }
             this.valueHelpDialog.open();
         },
         navToDetail: function (e) {
@@ -153,19 +213,25 @@ sap.ui.define([
                 "ContractId": ContractNo
             }, false);
         },
+        handleResetFilters: function (e) {
+            var filterModel = e.getSource().getModel("filter");
+            if (filterModel) {
+                filterModel.setProperty("/", {});
+            }
+        },
         loadData: function (filters) {
             var that = this;
             var model = this.getModel();
             var onSuccess = function (o, r) {
                     //map odata
                     var data = o.results;
-                    if (data && data.length > 0) {
+                    if (data) {
                         that.getModel("header").setProperty("/", data);
                         that.getModel("header").setProperty("/count", data.length);
                     }
                 },
-                onError = function () {
-                    MessageBox.error("There is an error with the network connection");
+                onError = function (e) {
+                    MessageBox.error(e);
                 };
             model.read("/HeaderSet", {
                     filters: filters,
@@ -175,8 +241,11 @@ sap.ui.define([
             )
         },
         handleConfirmFilter: function () {
-            var filters = this.getFilter();
-            this.loadData(filters);
+            var valid = this.validateFilterValue();
+            if (valid) {
+                var filters = this.getFilter();
+                this.loadData(filters);
+            }
         },
         getFilter: function () {
             var filters = [];
@@ -194,8 +263,11 @@ sap.ui.define([
             //     });
             //     filters.push(filterUser);
             // }
+            var filterCustomer = {
+                path: "Customer"
+            };
             if (filterData.soldToParty_Low && filterData.soldToParty_Low !== "") {
-                var filterCustomer = {
+                filterCustomer = {
                     path: "Customer",
                     operator: FilterOperator.EQ,
                     value1: filterData.soldToParty_Low
@@ -205,9 +277,16 @@ sap.ui.define([
                     filterCustomer.value2 = filterData.soldToParty_High;
                 }
                 filters.push(new Filter(filterCustomer));
+            } else if (filterData.soldToParty_High && filterData.soldToParty_High !== "") {
+                filterCustomer.operator = FilterOperator.LE;
+                filterCustomer.value1 = filterData.soldToParty_High;
+                filters.push(new Filter(filterCustomer));
             }
+            var filterDocumentDate = {
+                path: "DocumentDate"
+            };
             if (filterData.documentDate_Low && filterData.documentDate_Low !== "") {
-                var filterDocumentDate = {
+                filterDocumentDate = {
                     path: "DocumentDate",
                     operator: FilterOperator.EQ,
                     value1: filterData.documentDate_Low
@@ -217,9 +296,16 @@ sap.ui.define([
                     filterDocumentDate.value2 = filterData.documentDate_High;
                 }
                 filters.push(new Filter(filterDocumentDate));
+            } else if (filterData.documentDate_High && filterData.documentDate_High !== "") {
+                filterDocumentDate.operator = FilterOperator.LE;
+                filterDocumentDate.value1 = filterData.documentDate_High;
+                filters.push(new Filter(filterDocumentDate));
             }
+            var filterSalesOrg = {
+                path: "SalesOrg"
+            };
             if (filterData.salesOrg_Low && filterData.salesOrg_Low !== "") {
-                var filterSalesOrg = {
+                filterSalesOrg = {
                     path: "SalesOrg",
                     operator: FilterOperator.EQ,
                     value1: filterData.salesOrg_Low
@@ -229,9 +315,16 @@ sap.ui.define([
                     filterSalesOrg.value2 = filterData.salesOrg_High;
                 }
                 filters.push(new Filter(filterSalesOrg));
+            } else if (filterData.salesOrg_High && filterData.salesOrg_High !== "") {
+                filterSalesOrg.operator = FilterOperator.LE;
+                filterSalesOrg.value1 = filterData.salesOrg_High;
+                filters.push(new Filter(filterSalesOrg));
             }
+            var filterDistChannel = {
+                path: "DistrChannel"
+            };
             if (filterData.distChannel_Low && filterData.distChannel_Low !== "") {
-                var filterDistChannel = {
+                filterDistChannel = {
                     path: "DistrChannel",
                     operator: FilterOperator.EQ,
                     value1: filterData.distChannel_Low
@@ -241,9 +334,16 @@ sap.ui.define([
                     filterDistChannel.value2 = filterData.distChannel_High;
                 }
                 filters.push(new Filter(filterDistChannel));
+            } else if (filterData.distChannel_High && filterData.distChannel_High !== "") {
+                filterDistChannel.operator = FilterOperator.LE;
+                filterDistChannel.value1 = filterData.distChannel_High;
+                filters.push(new Filter(filterDistChannel));
             }
+            var filterSalesOffice = {
+                path: "SalesOffice"
+            };
             if (filterData.salesOffice_Low && filterData.salesOffice_Low !== "") {
-                var filterSalesOffice = {
+                filterSalesOffice = {
                     path: "SalesOffice",
                     operator: FilterOperator.EQ,
                     value1: filterData.salesOffice_Low
@@ -253,9 +353,16 @@ sap.ui.define([
                     filterSalesOffice.value2 = filterData.salesOffice_High;
                 }
                 filters.push(new Filter(filterSalesOffice));
+            } else if (filterData.salesOffice_High && filterData.salesOffice_High !== "") {
+                filterSalesOffice.operator = FilterOperator.LE;
+                filterSalesOffice.value1 = filterData.salesOffice_High;
+                filters.push(new Filter(filterSalesOffice));
             }
+            var filterSalesGroup = {
+                path: "SalesGroup"
+            };
             if (filterData.salesGroup_Low && filterData.salesGroup_Low !== "") {
-                var filterSalesGroup = {
+                filterSalesGroup = {
                     path: "SalesGroup",
                     operator: FilterOperator.EQ,
                     value1: filterData.salesGroup_Low
@@ -265,9 +372,16 @@ sap.ui.define([
                     filterSalesGroup.value2 = filterData.salesGroup_High;
                 }
                 filters.push(new Filter(filterSalesGroup));
+            } else if (filterData.salesGroup_High && filterData.salesGroup_High !== "") {
+                filterSalesGroup.operator = FilterOperator.LE;
+                filterSalesGroup.value1 = filterData.salesGroup_High;
+                filters.push(new Filter(filterSalesGroup));
             }
+            var filterCustomerGroup = {
+                path: "CustomerGroup"
+            };
             if (filterData.customerGroup_Low && filterData.customerGroup_Low !== "") {
-                var filterCustomerGroup = {
+                filterCustomerGroup = {
                     path: "CustomerGroup",
                     operator: FilterOperator.EQ,
                     value1: filterData.customerGroup_Low
@@ -277,9 +391,16 @@ sap.ui.define([
                     filterCustomerGroup.value2 = filterData.customerGroup_High;
                 }
                 filters.push(new Filter(filterCustomerGroup));
+            } else if (filterData.customerGroup_High && filterData.customerGroup_High !== "") {
+                filterCustomerGroup.operator = FilterOperator.LE;
+                filterCustomerGroup.value1 = filterData.customerGroup_High;
+                filters.push(new Filter(filterCustomerGroup));
             }
+            var filterSalesOrderType = {
+                path: "SalesOrderType"
+            };
             if (filterData.salesOrderType_Low && filterData.salesOrderType_Low !== "") {
-                var filterSalesOrderType = {
+                filterSalesOrderType = {
                     path: "SalesOrderType",
                     operator: FilterOperator.EQ,
                     value1: filterData.salesOrderType_Low
@@ -288,6 +409,11 @@ sap.ui.define([
                     filterSalesOrderType.operator = FilterOperator.BT;
                     filterSalesOrderType.value2 = filterData.salesOrderType_High;
                 }
+                filters.push(new Filter(filterSalesOrderType));
+            }
+            else if (filterData.salesOrderType_High && filterData.salesOrderType_High !== "") {
+                filterSalesOrderType.operator = FilterOperator.LE;
+                filterSalesOrderType.value1 = filterData.salesOrderType_High;
                 filters.push(new Filter(filterSalesOrderType));
             }
             return filters;

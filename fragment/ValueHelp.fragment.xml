@@ -1,16 +1,15 @@
 <core:FragmentDefinition
         xmlns:core="sap.ui.core"
-        xmlns:f="sap.ui.layout.form"
         xmlns="sap.m"
         displayBlock="true">
-    <Dialog contentHeight="20rem" stretch="{device>/system/phone}" beforeOpen="beforeOpen" showHeader="false"
-            type="Standard">
+    <Dialog contentHeight="20rem" contentWidth="30rem" stretch="{device>/system/phone}" beforeOpen="beforeOpen"
+            showHeader="false">
         <buttons>
             <Button type="Transparent" text="Close" press="onDialogClose"/>
         </buttons>
         <content>
-            <SearchField/>
-            <Table items="{valueHelp>/}" growing="true"
+            <SearchField id="searchValueHelp" search="onValueHelpSearch"/>
+            <Table id="tblValueHelp" fixedLayout="false" items="{valueHelp>/}" growing="true" alternateRowColors="true"
                    growingScrollToLoad="true" growingThreshold="15">
                 <columns>
                     <Column>

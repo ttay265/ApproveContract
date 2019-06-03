@@ -123,7 +123,7 @@
                     text="Sales Order Type"
                     key="fSalesOrderType">
                 <customControl>
-                    <f:SimpleForm>
+                    <f:SimpleForm id="SalesOrderType">
                         <Label text="From"/>
                         <Input valueHelpRequest="onValueHelpPressed" value="{filter>/salesOrderType_Low}" maxLength="10"
                                showValueHelp="true"/>
