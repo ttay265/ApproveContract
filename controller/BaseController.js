@@ -9,7 +9,7 @@ sap.ui.define([
     /*
      Common base class for the controllers of this app containing some convenience methods
      */
-    return Controller.extend("ZTVBH.controller.BaseController", {
+    return Controller.extend("ZAC_APP.controller.BaseController", {
         applyDensityClass: function () {
             this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
         },

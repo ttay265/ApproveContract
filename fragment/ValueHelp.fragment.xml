@@ -3,27 +3,28 @@
         xmlns:f="sap.ui.layout.form"
         xmlns="sap.m"
         displayBlock="true">
-    <Dialog title="Sales Group" type="Standard">
+    <Dialog contentHeight="20rem" stretch="{device>/system/phone}" beforeOpen="beforeOpen" showHeader="false"
+            type="Standard">
         <buttons>
-            <Button text="Ok" type="Emphasize" press="onSearchHelpOk"/>
             <Button type="Transparent" text="Close" press="onDialogClose"/>
         </buttons>
         <content>
             <SearchField/>
-            <Table items="{vhSalesGroup>/}">
+            <Table items="{valueHelp>/}" growing="true"
+                   growingScrollToLoad="true" growingThreshold="15">
                 <columns>
                     <Column>
-                        <Label text="Customer"/>
+                        <Label text="{valueHelp>/label}"/>
                     </Column>
                     <Column>
                         <Label text="Name"/>
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem>
+                    <ColumnListItem press="onSearchHelpOk" type="Active">
                         <cells>
-                            <Text text="{vhSalesGroup>SalesOrg}"/>
-                            <Text text="{vhSalesGroup>Description}"/>
+                            <Text text="{valueHelp>Id}"/>
+                            <Text text="{valueHelp>Name}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

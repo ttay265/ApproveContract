@@ -70,6 +70,78 @@ sap.ui.define([
                 binding.sort(sorters);
             }
         },
+        beforeOpen: function (e) {
+            //Binding data
+            e.getSource().setBusy(true);
+            var that = this;
+            var entitySetDirectory = "";
+            var filterTitle = "";
+            // this.valueHelpDialog.setModel(new JSONModel(), "valueHelp");
+            var onSuccess = function (d, r) {
+                    var vhModel = that.valueHelpDialog.getModel("valueHelp");
+                    vhModel.setProperty("/", d.results);
+                    vhModel.setProperty("/label", filterTitle);
+                    that.valueHelpDialog.setBusy(false);
+                },
+                onError = function (e) {
+                    MessageToast.show(e.toString());
+                    e.getSource().setBusy(false);
+                };
+            var odataModel = this.getModel();
+            var currentFilterControlId = this.currentVH.getParent().getParent().getParent().getParent().getId();
+            var entitySetDirectory = "";
+            var currentFilterId = currentFilterControlId.split("--", 2)[1];
+            switch (currentFilterId) {
+                case 'SoldToParty': {
+                    entitySetDirectory = "/CustomerValueHelpSet";
+                    filterTitle = "Sold To Party";
+                    break;
+                }
+                case 'SalesOrg': {
+                    entitySetDirectory = "/SalesOrgValueHelpSet";
+                    filterTitle = "Sales Organization";
+                    break;
+                }
+                case 'DistChannel': {
+                    entitySetDirectory = "/DistChannelValueHelpSet";
+                    filterTitle = "Distribution Channel";
+                    break;
+                }
+                case 'SalesOffice': {
+                    entitySetDirectory = "/SalesOfficeValueHelpSet";
+                    filterTitle = "Sales Office";
+                    break;
+                }
+                case 'SalesGroup': {
+                    entitySetDirectory = "/SalesGroupValueHelpSet";
+                    filterTitle = "Sales Group";
+                    break;
+                }
+                case 'CustomerGroup': {
+                    entitySetDirectory = "/CustomerGroupValueHelpSet";
+                    filterTitle = "Customer Group";
+                    break;
+                }
+                default:
+                    return;
+            }
+            odataModel.read(entitySetDirectory, {
+                success: onSuccess,
+                error: onError
+            });
+        },
+        onSearchHelpOk: function (e) {
+            var source = this.currentVH;
+            var context = e.getSource().getBindingContext("valueHelp");
+            var id = context.getProperty("Id");
+            source.setValue(id);
+            this.valueHelpDialog.close();
+        },
+        onValueHelpPressed: function (oEvent) {
+            this.currentVH = oEvent.getSource();
+            this.valueHelpDialog = this.initFragment("ZAC_APP.fragment.ValueHelp", "valueHelp");
+            this.valueHelpDialog.open();
+        },
         navToDetail: function (e) {
             //get contract no of thje line
             var context = e.getSource().getBindingContext("header");
@@ -186,7 +258,7 @@ sap.ui.define([
                 var filterSalesGroup = {
                     path: "SalesGroup",
                     operator: FilterOperator.EQ,
-                    value1: filterData.salesOffice_Low
+                    value1: filterData.salesGroup_Low
                 };
                 if (filterData.salesGroup_High && filterData.salesGroup_High !== "") {
                     filterSalesGroup.operator = FilterOperator.BT;
