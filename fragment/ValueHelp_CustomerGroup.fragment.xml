@@ -3,14 +3,14 @@
         xmlns:f="sap.ui.layout.form"
         xmlns="sap.m"
         displayBlock="true">
-    <Dialog title="Sold to Party" type="Standard">
+    <Dialog title="Customer Group" type="Standard">
         <buttons>
             <Button text="Ok" type="Emphasize" press="onSearchHelpOk"/>
             <Button type="Transparent" text="Close" press="onDialogClose"/>
         </buttons>
         <content>
             <SearchField/>
-            <Table items="{vhCustomer>/}">
+            <Table items="{vhCustomerGroup>/}">
                 <columns>
                     <Column>
                         <Label text="Customer"/>
@@ -22,8 +22,8 @@
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{vhCustomer>Customer}"/>
-                            <Text text="{vhCustomer>CustomerName}"/>
+                            <Text text="{vhCustomerGroup>SalesOrg}"/>
+                            <Text text="{vhCustomerGroup>Description}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
