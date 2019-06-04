@@ -21,7 +21,10 @@ sap.ui.define([
             this.FilterDialog = this.initFragment("ZAC_APP.fragment.MasterFilter", "filter");
             this.SortDialog = this.initFragment("ZAC_APP.fragment.MasterSort", "sort");
             this.valueHelpDialog = this.initFragment("ZAC_APP.fragment.ValueHelp", "valueHelp");
-            this.setModel(new JSONModel(), "header");
+            this.setModel(new JSONModel({
+                count: 0,
+                result: []
+            }), "header");
             this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
         },
         onRefresh: function (oEvent) {
@@ -226,7 +229,7 @@ sap.ui.define([
                     //map odata
                     var data = o.results;
                     if (data) {
-                        that.getModel("header").setProperty("/", data);
+                        that.getModel("header").setProperty("/result", data);
                         that.getModel("header").setProperty("/count", data.length);
                     }
                 },
@@ -254,15 +257,6 @@ sap.ui.define([
             if (filterModel) {
                 filterData = filterModel.getProperty("/");
             }
-            // var userLogon = this.retrieveSAPLogonUser();
-            // if (userLogon !== "") {
-            //     var filterUser = new Filter({
-            //         path: "Username",
-            //         operator: FilterOperator.EQ,
-            //         value1: userLogon
-            //     });
-            //     filters.push(filterUser);
-            // }
             var filterCustomer = {
                 path: "Customer"
             };
@@ -286,17 +280,20 @@ sap.ui.define([
                 path: "DocumentDate"
             };
             if (filterData.documentDate_Low && filterData.documentDate_Low !== "") {
+                filterData.documentDate_Low.setHours(7);
                 filterDocumentDate = {
                     path: "DocumentDate",
                     operator: FilterOperator.EQ,
                     value1: filterData.documentDate_Low
                 };
                 if (filterData.documentDate_High && filterData.documentDate_High !== "") {
+                    filterData.documentDate_High.setHours(7);
                     filterDocumentDate.operator = FilterOperator.BT;
                     filterDocumentDate.value2 = filterData.documentDate_High;
                 }
                 filters.push(new Filter(filterDocumentDate));
             } else if (filterData.documentDate_High && filterData.documentDate_High !== "") {
+                filterData.documentDate_High.setHours(7);
                 filterDocumentDate.operator = FilterOperator.LE;
                 filterDocumentDate.value1 = filterData.documentDate_High;
                 filters.push(new Filter(filterDocumentDate));
@@ -410,8 +407,7 @@ sap.ui.define([
                     filterSalesOrderType.value2 = filterData.salesOrderType_High;
                 }
                 filters.push(new Filter(filterSalesOrderType));
-            }
-            else if (filterData.salesOrderType_High && filterData.salesOrderType_High !== "") {
+            } else if (filterData.salesOrderType_High && filterData.salesOrderType_High !== "") {
                 filterSalesOrderType.operator = FilterOperator.LE;
                 filterSalesOrderType.value1 = filterData.salesOrderType_High;
                 filters.push(new Filter(filterSalesOrderType));

@@ -11,7 +11,7 @@
                   id="tableMaster"
                   growing="true"
                   growingScrollToLoad="true"
-                  items="{header>/}">
+                  items="{header>/result}">
                 <items>
                     <ObjectListItem press="navToDetail" type="Active" title="{header>Customername}"
                                     intro="{header>ContractNo}"

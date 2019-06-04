@@ -19,8 +19,13 @@ sap.ui.define([
                 showMeasure: false
             });
 
-            return oCurrency.formatValue([amount, currency], "string") + " " + "VND";
-
+            var string = "";
+            if (amount && amount > 0) {
+                string = oCurrency.formatValue([amount, currency], "string") + " " + "VND";
+            } else {
+                string = "0 VND";
+            }
+            return string;
         }
     };
 });

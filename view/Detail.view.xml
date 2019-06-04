@@ -12,7 +12,7 @@
                         labelSpanXL="4"
                         labelSpanL="4"
                         labelSpanM="4"
-                        labelSpanS="12"
+                        labelSpanS="5"
                         adjustLabelSpan="false"
                         emptySpanXL="0"
                         emptySpanL="4"
@@ -43,7 +43,7 @@
                     <Text text="{ parts: [ {path:'detail1>/TaxAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
                           textAlign="End" wrapping="false"/>
                     <Label text="Total"/>
-                    <Text text="{ parts: [ {path:'detail1>/TotalAmt'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
+                    <Text text="{ parts: [ {path:'detail1>/Total'}, {path:'detail1>/CurrencyCode'} ], formatter:'.formatter.formattedCurrencyWithUom'}"
                           textAlign="End" wrapping="false"/>
                 </form:SimpleForm>
             </Panel>
@@ -55,7 +55,7 @@
                             labelSpanXL="4"
                             labelSpanL="4"
                             labelSpanM="4"
-                            labelSpanS="12"
+                            labelSpanS="5"
                             adjustLabelSpan="false"
                             emptySpanXL="0"
                             emptySpanL="0"
