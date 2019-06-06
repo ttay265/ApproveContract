@@ -115,7 +115,7 @@
                             <Text text="{detail2>Material}"/>
                             <Text text="{detail2>MaterialDescription}"/>
                             <Text text="{detail2>TargetQuantity}"/>
-                            <Text text="{detail2>TargetQuantityUoM}"/>
+                            <Text text="{detail2>UoMDesc}"/>
                             <Text text="{
     parts: [
         {path: 'detail2>NetPrice'},
